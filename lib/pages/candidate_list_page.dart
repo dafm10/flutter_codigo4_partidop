@@ -9,6 +9,24 @@ class CandidateListPage extends StatefulWidget {
 }
 
 class _CandidateListPageState extends State<CandidateListPage> {
+  List<String> regionList = [
+    "Lima",
+    "Arequipa",
+    "Tacna",
+    "Cusco",
+    "Huancavelica",
+    "La Libertad",
+  ];
+
+  String regionValue = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    regionValue = regionList[0];
+  }
+
   @override
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height;
@@ -16,7 +34,32 @@ class _CandidateListPageState extends State<CandidateListPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Example"),
+        backgroundColor: COLOR_BRAND_PRIMARY,
+        title: DropdownButtonHideUnderline(
+          child: DropdownButton(
+            value: regionValue,
+            icon: Icon(
+              Icons.keyboard_arrow_down,
+              color: Colors.white,
+            ),
+            items: regionList
+                .map((e) => DropdownMenuItem(
+                      child: Text(
+                        e,
+                        style: TextStyle(
+                          color: Colors.black87.withOpacity(0.6),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      value: e,
+                    ))
+                .toList(),
+            onChanged: (String? value) {
+              regionValue = value!;
+              setState(() {});
+            },
+          ),
+        ),
       ),
       body: Column(
         children: [
@@ -29,7 +72,7 @@ class _CandidateListPageState extends State<CandidateListPage> {
                 BoxShadow(
                   color: Colors.black12.withOpacity(0.08),
                   blurRadius: 12.0,
-                  offset: Offset(4,4),
+                  offset: Offset(4, 4),
                 ),
               ],
             ),
