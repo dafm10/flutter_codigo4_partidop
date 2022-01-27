@@ -36,7 +36,7 @@ class ItemListHomeWidget extends StatelessWidget {
       ),
       child: ListTile(
         onTap: (){
-          onPressed;
+          onPressed();
         },
         // minLeadingWidth para el espacio entre los items
         minLeadingWidth: 0,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_codigo4_partidop/pages/candidate_list_page.dart';
 import 'package:flutter_codigo4_partidop/ui/general/colors.dart';
 import 'package:flutter_codigo4_partidop/ui/widgets/item_list_home_widget.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -27,18 +28,26 @@ class HomePage extends StatelessWidget {
             title: "Candidatos al Congreso",
             subTitle: "Contamos con un equipo de verdad, ¡Conócelos!",
             imageLeading: "assets/images/bx-male-female.svg",
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CandidateListPage(),
+                  ));
+            },
+          ),
+          ItemListHomeWidget(
+            title: "Propiuestas Moradas",
+            subTitle: "Propuestas Legislativas - Congreso 2020",
+            imageLeading: "assets/images/bx-spread.svg",
             onPressed: () {},
           ),
           ItemListHomeWidget(
-              title: "Propiuestas Moradas",
-              subTitle: "Propuestas Legislativas - Congreso 2020",
-              imageLeading: "assets/images/bx-spread.svg",
-              onPressed: () {}),
-          ItemListHomeWidget(
-              title: "Bases Moradas",
-              subTitle: "Descrube la base morada más cerca de ti",
-              imageLeading: "assets/images/bx-map.svg",
-              onPressed: () {}),
+            title: "Bases Moradas",
+            subTitle: "Descrube la base morada más cerca de ti",
+            imageLeading: "assets/images/bx-map.svg",
+            onPressed: () {},
+          ),
         ],
       ),
     );
