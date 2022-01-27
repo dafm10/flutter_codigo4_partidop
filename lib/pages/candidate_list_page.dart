@@ -36,7 +36,7 @@ class _CandidateListPageState extends State<CandidateListPage> {
             child: Row(
               children: [
                 Container(
-                  height: 90,
+                  height: _height * 0.114,
                   width: 90,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
@@ -87,8 +87,8 @@ class _CandidateListPageState extends State<CandidateListPage> {
                   ),
                 ),
                 Container(
-                  width: 70,
-                  height: 90,
+                  width: _width * 0.175,
+                  height: _height * 0.114,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
