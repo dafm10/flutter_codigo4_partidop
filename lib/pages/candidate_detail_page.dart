@@ -60,38 +60,80 @@ class _CandidateDetailPageState extends State<CandidateDetailPage>
               ),
             ),
             SliverPersistentHeader(
-              delegate: _SliverAppBarDelegate(),
+              pinned: true,
+              delegate: _SliverAppBarDelegate(
+                TabBar(
+                  controller: _tabController,
+                  tabs: [
+                    Tab(
+                      child: Text(
+                        "Hola 1",
+                        style: TextStyle(
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ),
+                    Tab(
+                      child: Text(
+                        "Hola 2",
+                        style: TextStyle(
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ];
         },
-        body: Center(
-          child: Text("Hola"),
+        body: TabBarView(
+          controller: _tabController,
+          children: [
+            Center(
+              child: Text(
+                "1",
+                style: TextStyle(color: Colors.black87),
+              ),
+            ),
+            Center(
+              child: Text(
+                "2",
+                style: TextStyle(color: Colors.black87),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
+class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  final TabBar _tabBar;
 
-class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate{
+  _SliverAppBarDelegate(this._tabBar);
+
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    // TODO: implement build
-    throw UnimplementedError();
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      child: _tabBar,
+    );
   }
 
   @override
-  // TODO: implement maxExtent
-  double get maxExtent => throw UnimplementedError();
+  // tamaño maximo
+  double get maxExtent => _tabBar.preferredSize.height;
 
   @override
   // TODO: implement minExtent
-  double get minExtent => throw UnimplementedError();
+  double get minExtent => _tabBar.preferredSize.height;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
     // TODO: implement shouldRebuild
-    throw UnimplementedError();
+    // throw UnimplementedError();
+    return false;
   }
-  
 }
