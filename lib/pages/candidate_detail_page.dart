@@ -15,6 +15,9 @@ class _CandidateDetailPageState extends State<CandidateDetailPage>
     // TODO: implement initState
     super.initState();
     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
+    _tabController!.addListener(() {
+      print(_tabController!.index);
+    });
   }
 
   @override
@@ -64,18 +67,24 @@ class _CandidateDetailPageState extends State<CandidateDetailPage>
               delegate: _SliverAppBarDelegate(
                 TabBar(
                   controller: _tabController,
+                  indicatorWeight: 3.0,
+                  unselectedLabelStyle: TextStyle(
+                    color: COLOR_BRAND_PRIMARY.withOpacity(0.6),
+                  ),
                   tabs: [
                     Tab(
+                      icon: Icon(Icons.person, color: COLOR_BRAND_PRIMARY,),
                       child: Text(
-                        "Hola 1",
+                        "¿Quien soy?",
                         style: TextStyle(
                           color: Colors.black87,
                         ),
                       ),
                     ),
                     Tab(
+                      icon: Icon(Icons.info, color: COLOR_BRAND_PRIMARY,),
                       child: Text(
-                        "Hola 2",
+                        "Información",
                         style: TextStyle(
                           color: Colors.black87,
                         ),
