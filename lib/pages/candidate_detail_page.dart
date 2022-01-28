@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_codigo4_partidop/ui/general/colors.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CandidateDetailPage extends StatefulWidget {
   @override
@@ -9,15 +10,13 @@ class CandidateDetailPage extends StatefulWidget {
 class _CandidateDetailPageState extends State<CandidateDetailPage>
     with SingleTickerProviderStateMixin {
   TabController? _tabController;
+  int valueTab = 0;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
-    _tabController!.addListener(() {
-      print(_tabController!.index);
-    });
   }
 
   @override
@@ -67,28 +66,41 @@ class _CandidateDetailPageState extends State<CandidateDetailPage>
               delegate: _SliverAppBarDelegate(
                 TabBar(
                   controller: _tabController,
+                  indicatorColor: COLOR_BRAND_PRIMARY,
                   indicatorWeight: 3.0,
-                  unselectedLabelStyle: TextStyle(
-                    color: COLOR_BRAND_PRIMARY.withOpacity(0.6),
-                  ),
+                  labelColor: Colors.black87,
+                  unselectedLabelColor: Colors.black26,
+                  onTap: (int value){
+                    setState(() {
+                      valueTab = value;
+                    });
+                  },
                   tabs: [
                     Tab(
-                      icon: Icon(Icons.person, color: COLOR_BRAND_PRIMARY,),
-                      child: Text(
+                      text: "¿Quien soy?",
+                      icon: SvgPicture.asset(
+                        "assets/images/user.svg",
+                        color: valueTab == 0 ? COLOR_BRAND_PRIMARY : Colors.black26,
+                      ),
+                      /*child: Text(
                         "¿Quien soy?",
                         style: TextStyle(
-                          color: Colors.black87,
+                          color: _tabController!.index == 0 ? Colors.black87 : Colors.black26,
                         ),
-                      ),
+                      ),*/
                     ),
                     Tab(
-                      icon: Icon(Icons.info, color: COLOR_BRAND_PRIMARY,),
-                      child: Text(
+                      text: "Información",
+                      icon: SvgPicture.asset(
+                        "assets/images/info.svg",
+                        color: valueTab == 1 ? COLOR_BRAND_PRIMARY : Colors.black26,
+                      ),
+                      /*child: Text(
                         "Información",
                         style: TextStyle(
-                          color: Colors.black87,
+                          color: _tabController!.index == 1 ? Colors.black87 : Colors.black26,
                         ),
-                      ),
+                      ),*/
                     ),
                   ],
                 ),
@@ -143,6 +155,6 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
     // TODO: implement shouldRebuild
     // throw UnimplementedError();
-    return false;
+    return true;
   }
 }
