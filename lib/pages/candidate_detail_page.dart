@@ -26,6 +26,18 @@ class CandidateDetailPage extends StatelessWidget {
                     "http://192.168.1.37:8000/media/candidatos/fracisco_sagasti.jpg",
                     fit: BoxFit.cover,
                   ),
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.center,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          COLOR_BRAND_PRIMARY.withOpacity(0),
+                          COLOR_BRAND_PRIMARY.withOpacity(0.5),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
