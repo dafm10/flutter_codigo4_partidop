@@ -59,19 +59,8 @@ class _CandidateDetailPageState extends State<CandidateDetailPage>
                 ),
               ),
             ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  Container(
-                    height: 300,
-                    color: Colors.redAccent,
-                  ),
-                  Container(
-                    height: 400,
-                    color: Colors.blueAccent,
-                  ),
-                ],
-              ),
+            SliverPersistentHeader(
+              delegate: _SliverAppBarDelegate(),
             ),
           ];
         },
@@ -81,4 +70,28 @@ class _CandidateDetailPageState extends State<CandidateDetailPage>
       ),
     );
   }
+}
+
+
+class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate{
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+
+  @override
+  // TODO: implement maxExtent
+  double get maxExtent => throw UnimplementedError();
+
+  @override
+  // TODO: implement minExtent
+  double get minExtent => throw UnimplementedError();
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    // TODO: implement shouldRebuild
+    throw UnimplementedError();
+  }
+  
 }
