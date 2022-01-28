@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_codigo4_partidop/models/candidate_model.dart';
+import 'package:flutter_codigo4_partidop/pages/candidate_detail_page.dart';
 import 'package:flutter_codigo4_partidop/services/api_services.dart';
 import 'package:flutter_codigo4_partidop/ui/general/colors.dart';
 import 'package:flutter_codigo4_partidop/ui/widgets/item_list_candidate_widget.dart';
@@ -12,7 +13,6 @@ class CandidateListPage extends StatefulWidget {
 }
 
 class _CandidateListPageState extends State<CandidateListPage> {
-
   final APIService _apiService = APIService();
   List<String> regionList = [
     "Lima",
@@ -42,15 +42,13 @@ class _CandidateListPageState extends State<CandidateListPage> {
 
   changeRegion(String region) {
     listCandidate = listCandidateAux;
-    listCandidate = listCandidate.where((element) => element.region == region).toList();
-    setState(() {
-      
-    });
+    listCandidate =
+        listCandidate.where((element) => element.region == region).toList();
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-
     //print("xxxx ${listCandidate.where((element) => element.region == "Lima").toList()}");
 
     double _height = MediaQuery.of(context).size.height;
@@ -122,7 +120,7 @@ class _CandidateListPageState extends State<CandidateListPage> {
         shrinkWrap: true,
         physics: ScrollPhysics(),
         itemCount: listCandidate.length,
-        itemBuilder: (BuildContext context, int index){
+        itemBuilder: (BuildContext context, int index) {
           return ItemListCandidateWidget(
             image: listCandidate[index].foto,
             name: listCandidate[index].nombre,
@@ -130,6 +128,12 @@ class _CandidateListPageState extends State<CandidateListPage> {
             resumen: listCandidate[index].resumen,
             numero: listCandidate[index].numero,
             //profesion: listCandidate[index].profesion,
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CandidateDetailPage()));
+            },
           );
         },
       ),
