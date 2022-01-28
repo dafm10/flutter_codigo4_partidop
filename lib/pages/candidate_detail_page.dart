@@ -1,8 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_codigo4_partidop/ui/general/colors.dart';
 
-class CandidateDetailPage extends StatelessWidget {
-  const CandidateDetailPage({Key? key}) : super(key: key);
+class CandidateDetailPage extends StatefulWidget {
+
+  @override
+  State<CandidateDetailPage> createState() => _CandidateDetailPageState();
+}
+
+class _CandidateDetailPageState extends State<CandidateDetailPage>  with SingleTickerProviderStateMixin{
+
+  TabController? _tabController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +30,9 @@ class CandidateDetailPage extends StatelessWidget {
             backgroundColor: COLOR_BRAND_PRIMARY,
             expandedHeight: _height * 0.4,
             elevation: 0,
+            floating: false,
+            pinned: true,
+            snap: false,
             flexibleSpace: FlexibleSpaceBar(
               title: Text("Hola"),
               centerTitle: true,
@@ -40,6 +57,17 @@ class CandidateDetailPage extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            bottom: TabBar(
+              controller: _tabController,
+              tabs: [
+                Tab(
+                  text: "Hola",
+                ),
+                Tab(
+                  text: "Hola",
+                ),
+              ],
             ),
           ),
           SliverList(
