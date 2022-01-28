@@ -70,7 +70,7 @@ class _CandidateDetailPageState extends State<CandidateDetailPage>
                   indicatorWeight: 3.0,
                   labelColor: Colors.black87,
                   unselectedLabelColor: Colors.black26,
-                  onTap: (int value){
+                  onTap: (int value) {
                     setState(() {
                       valueTab = value;
                     });
@@ -80,7 +80,9 @@ class _CandidateDetailPageState extends State<CandidateDetailPage>
                       text: "¿Quien soy?",
                       icon: SvgPicture.asset(
                         "assets/images/user.svg",
-                        color: valueTab == 0 ? COLOR_BRAND_PRIMARY : Colors.black26,
+                        color: valueTab == 0
+                            ? COLOR_BRAND_PRIMARY
+                            : Colors.black26,
                       ),
                       /*child: Text(
                         "¿Quien soy?",
@@ -93,7 +95,9 @@ class _CandidateDetailPageState extends State<CandidateDetailPage>
                       text: "Información",
                       icon: SvgPicture.asset(
                         "assets/images/info.svg",
-                        color: valueTab == 1 ? COLOR_BRAND_PRIMARY : Colors.black26,
+                        color: valueTab == 1
+                            ? COLOR_BRAND_PRIMARY
+                            : Colors.black26,
                       ),
                       /*child: Text(
                         "Información",
@@ -111,10 +115,13 @@ class _CandidateDetailPageState extends State<CandidateDetailPage>
         body: TabBarView(
           controller: _tabController,
           children: [
-            Center(
+            Container(
+              padding: const EdgeInsets.all(12.0),
               child: Text(
-                "1",
-                style: TextStyle(color: Colors.black87),
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+                style: TextStyle(
+                  color: Colors.black87
+                ),
               ),
             ),
             Center(
