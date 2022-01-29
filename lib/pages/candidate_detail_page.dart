@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_codigo4_partidop/ui/general/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 
 class CandidateDetailPage extends StatefulWidget {
   @override
@@ -17,6 +18,18 @@ class _CandidateDetailPageState extends State<CandidateDetailPage>
     // TODO: implement initState
     super.initState();
     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
+    _tabController!.addListener(() {
+      valueTab = _tabController!.index;
+      setState(() {
+
+      });
+    });
+  }
+
+  handleTabSelection(){
+    setState(() {
+
+    });
   }
 
   @override
@@ -63,6 +76,7 @@ class _CandidateDetailPageState extends State<CandidateDetailPage>
             ),
             SliverPersistentHeader(
               pinned: true,
+              floating: false,
               delegate: _SliverAppBarDelegate(
                 TabBar(
                   controller: _tabController,
@@ -124,10 +138,77 @@ class _CandidateDetailPageState extends State<CandidateDetailPage>
                 ),
               ),
             ),
-            Center(
-              child: Text(
-                "2",
-                style: TextStyle(color: Colors.black87),
+            Container(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: Text("Francisco Sagasti",
+                        style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold,),
+                      ),
+                      trailing: Icon(Icons.share, color: COLOR_BRAND_PRIMARY,),
+                    ),
+                    ListTile(
+                      title: Text("Postula por la región:",
+                        style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold,),
+                      ),
+                      subtitle: Text("Lima"),
+                    ),
+                    ListTile(
+                      title: Text("Profesión:",
+                        style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold,),
+                      ),
+                      subtitle: Text("Ingeniero Industrial"),
+                    ),
+                    ListTile(
+                      title: Text("Email",
+                        style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold,),
+                      ),
+                      subtitle: Text("contacto@dominio.com"),
+                    ),
+                    ListTile(
+                      title: Text("Experiencia",
+                        style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold,),
+                      ),
+                      subtitle: Text("It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+                      ),
+                    ),
+                    ListTile(
+                      title: Text("Página web",
+                        style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold,),
+                      ),
+                      subtitle: Text("https://tudominio.com",
+                        style: TextStyle(
+                          color: COLOR_BRAND_PRIMARY,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      trailing: SvgPicture.asset("assets/images/link.svg", color: COLOR_BRAND_PRIMARY,),
+                    ),
+                    ListTile(
+                      title: Text("Redes Sociales",
+                        style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold,),
+                      ),
+                      subtitle: Row(
+                        children: [
+                          IconButton(
+                            onPressed: (){},
+                            icon: SvgPicture.asset("assets/images/facebook.svg", color: COLOR_BRAND_PRIMARY,),
+                          ),
+                          IconButton(
+                            onPressed: (){},
+                            icon: SvgPicture.asset("assets/images/twitter.svg", color: COLOR_BRAND_PRIMARY,),
+                          ),
+                          IconButton(
+                            onPressed: (){},
+                            icon: SvgPicture.asset("assets/images/instagram.svg", color: COLOR_BRAND_PRIMARY,),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: _height * 0.015,),
+                  ],
+                ),
               ),
             ),
           ],
