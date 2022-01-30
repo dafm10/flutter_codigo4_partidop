@@ -3,13 +3,12 @@ import 'package:flutter_codigo4_partidop/models/candidate_model.dart';
 import 'package:flutter_codigo4_partidop/ui/general/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CandidateDetailPage extends StatefulWidget {
-
   CandidateModel candidate;
 
   CandidateDetailPage({required this.candidate});
-
 
   @override
   State<CandidateDetailPage> createState() => _CandidateDetailPageState();
@@ -48,7 +47,7 @@ class _CandidateDetailPageState extends State<CandidateDetailPage>
               backgroundColor: COLOR_BRAND_PRIMARY,
               expandedHeight: _height * 0.4,
               elevation: 0,
-              floating: true,
+              floating: false,
               pinned: true,
               snap: false,
               flexibleSpace: FlexibleSpaceBar(
@@ -79,7 +78,7 @@ class _CandidateDetailPageState extends State<CandidateDetailPage>
             ),
             SliverPersistentHeader(
               pinned: true,
-              floating: false,
+              //floating: false,
               delegate: _SliverAppBarDelegate(
                 TabBar(
                   controller: _tabController,
@@ -146,7 +145,7 @@ class _CandidateDetailPageState extends State<CandidateDetailPage>
                     ListTile(
                       title: Text(
                         widget.candidate.nombre,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: COLOR_BRAND_PRIMARY,
                           fontWeight: FontWeight.bold,
                         ),
@@ -157,7 +156,7 @@ class _CandidateDetailPageState extends State<CandidateDetailPage>
                       ),
                     ),
                     ListTile(
-                      title: Text(
+                      title: const Text(
                         "Postula por la región:",
                         style: TextStyle(
                           color: Colors.black87,
@@ -167,7 +166,7 @@ class _CandidateDetailPageState extends State<CandidateDetailPage>
                       subtitle: Text(widget.candidate.region),
                     ),
                     ListTile(
-                      title: Text(
+                      title: const Text(
                         "Número:",
                         style: TextStyle(
                           color: Colors.black87,
@@ -176,60 +175,73 @@ class _CandidateDetailPageState extends State<CandidateDetailPage>
                       ),
                       subtitle: Text(widget.candidate.numero.toString()),
                     ),
-                   widget.candidate.profesion != "" ? ListTile(
-                      title: Text(
-                        "Profesión:",
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      subtitle: Text(widget.candidate.profesion!),
-                    ) : Container(),
-                    widget.candidate.email != "" ? ListTile(
-                      title: Text(
-                        "Email",
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      subtitle: Text(widget.candidate.email!),
-                    ) : Container(),
-                    widget.candidate.experiencia != "" ? ListTile(
-                      title: Text(
-                        "Experiencia",
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      subtitle: Text(
-                          widget.candidate.experiencia!,
-                      ),
-                    ) : Container(),
-                    widget.candidate.paginaWeb != "" ? ListTile(
-                      title: Text(
-                        "Página web",
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      subtitle: Text(
-                        widget.candidate.paginaWeb!,
-                        style: TextStyle(
-                          color: COLOR_BRAND_PRIMARY,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      trailing: SvgPicture.asset(
-                        "assets/images/link.svg",
-                        color: COLOR_BRAND_PRIMARY,
-                      ),
-                    ) : Container(),
+                    widget.candidate.profesion != ""
+                        ? ListTile(
+                            title: const Text(
+                              "Profesión:",
+                              style: TextStyle(
+                                color: Colors.black87,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            subtitle: Text(widget.candidate.profesion!),
+                          )
+                        : Container(),
+                    widget.candidate.email != ""
+                        ? ListTile(
+                            title: const Text(
+                              "Email",
+                              style: TextStyle(
+                                color: Colors.black87,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            subtitle: Text(widget.candidate.email!),
+                          )
+                        : Container(),
+                    widget.candidate.experiencia != ""
+                        ? ListTile(
+                            title: const Text(
+                              "Experiencia",
+                              style: TextStyle(
+                                color: Colors.black87,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            subtitle: Text(
+                              widget.candidate.experiencia!,
+                            ),
+                          )
+                        : Container(),
+                    widget.candidate.paginaWeb != ""
+                        ? ListTile(
+                            title: const Text(
+                              "Página web",
+                              style: TextStyle(
+                                color: Colors.black87,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            subtitle: Text(
+                              widget.candidate.paginaWeb!,
+                              style: const TextStyle(
+                                color: COLOR_BRAND_PRIMARY,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            trailing: IconButton(
+                              icon: SvgPicture.asset(
+                                "assets/images/link.svg",
+                                color: COLOR_BRAND_PRIMARY,
+                              ),
+                              onPressed: () async {
+                                await launch(widget.candidate.paginaWeb!);
+                              },
+                            ),
+                          )
+                        : Container(),
                     ListTile(
-                      title: Text(
+                      title: const Text(
                         "Redes Sociales",
                         style: TextStyle(
                           color: Colors.black87,
@@ -238,27 +250,39 @@ class _CandidateDetailPageState extends State<CandidateDetailPage>
                       ),
                       subtitle: Row(
                         children: [
-                          widget.candidate.facebook != "" ? IconButton(
-                            onPressed: () {},
-                            icon: SvgPicture.asset(
-                              "assets/images/facebook.svg",
-                              color: COLOR_BRAND_PRIMARY,
-                            ),
-                          ) : Container(),
-                          widget.candidate.twitter != "" ? IconButton(
-                            onPressed: () {},
-                            icon: SvgPicture.asset(
-                              "assets/images/twitter.svg",
-                              color: COLOR_BRAND_PRIMARY,
-                            ),
-                          ) : Container(),
-                          widget.candidate.instagram != "" ? IconButton(
-                            onPressed: () {},
-                            icon: SvgPicture.asset(
-                              "assets/images/instagram.svg",
-                              color: COLOR_BRAND_PRIMARY,
-                            ),
-                          ) : Container(),
+                          widget.candidate.facebook != ""
+                              ? IconButton(
+                                  onPressed: () async {
+                                    await launch(widget.candidate.facebook!);
+                                  },
+                                  icon: SvgPicture.asset(
+                                    "assets/images/facebook.svg",
+                                    color: COLOR_BRAND_PRIMARY,
+                                  ),
+                                )
+                              : Container(),
+                          widget.candidate.twitter != ""
+                              ? IconButton(
+                                  onPressed: () async {
+                                    await launch(widget.candidate.twitter!);
+                                  },
+                                  icon: SvgPicture.asset(
+                                    "assets/images/twitter.svg",
+                                    color: COLOR_BRAND_PRIMARY,
+                                  ),
+                                )
+                              : Container(),
+                          widget.candidate.instagram != ""
+                              ? IconButton(
+                                  onPressed: () async {
+                                    await launch(widget.candidate.instagram!);
+                                  },
+                                  icon: SvgPicture.asset(
+                                    "assets/images/instagram.svg",
+                                    color: COLOR_BRAND_PRIMARY,
+                                  ),
+                                )
+                              : Container(),
                         ],
                       ),
                     ),
