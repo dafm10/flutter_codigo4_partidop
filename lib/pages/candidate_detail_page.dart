@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_codigo4_partidop/models/candidate_model.dart';
 import 'package:flutter_codigo4_partidop/ui/general/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 
 class CandidateDetailPage extends StatefulWidget {
+
+  CandidateModel candidate;
+
+  CandidateDetailPage({required this.candidate});
+
+
   @override
   State<CandidateDetailPage> createState() => _CandidateDetailPageState();
 }
@@ -20,16 +27,12 @@ class _CandidateDetailPageState extends State<CandidateDetailPage>
     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     _tabController!.addListener(() {
       valueTab = _tabController!.index;
-      setState(() {
-
-      });
+      setState(() {});
     });
   }
 
-  handleTabSelection(){
-    setState(() {
-
-    });
+  handleTabSelection() {
+    setState(() {});
   }
 
   @override
@@ -49,13 +52,13 @@ class _CandidateDetailPageState extends State<CandidateDetailPage>
               pinned: true,
               snap: false,
               flexibleSpace: FlexibleSpaceBar(
-                title: Text("Holass"),
+                title: Text(widget.candidate.nombre),
                 centerTitle: true,
                 background: Stack(
                   fit: StackFit.expand,
                   children: [
                     Image.network(
-                      "http://192.168.1.37:8000/media/candidatos/fracisco_sagasti.jpg",
+                      widget.candidate.foto,
                       fit: BoxFit.cover,
                     ),
                     DecoratedBox(
@@ -132,10 +135,8 @@ class _CandidateDetailPageState extends State<CandidateDetailPage>
             Container(
               padding: const EdgeInsets.all(12.0),
               child: Text(
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
-                style: TextStyle(
-                  color: Colors.black87
-                ),
+                widget.candidate.resumen,
+                style: TextStyle(color: Colors.black87),
               ),
             ),
             Container(
@@ -143,70 +144,127 @@ class _CandidateDetailPageState extends State<CandidateDetailPage>
                 child: Column(
                   children: [
                     ListTile(
-                      title: Text("Francisco Sagasti",
-                        style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold,),
-                      ),
-                      trailing: Icon(Icons.share, color: COLOR_BRAND_PRIMARY,),
-                    ),
-                    ListTile(
-                      title: Text("Postula por la región:",
-                        style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold,),
-                      ),
-                      subtitle: Text("Lima"),
-                    ),
-                    ListTile(
-                      title: Text("Profesión:",
-                        style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold,),
-                      ),
-                      subtitle: Text("Ingeniero Industrial"),
-                    ),
-                    ListTile(
-                      title: Text("Email",
-                        style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold,),
-                      ),
-                      subtitle: Text("contacto@dominio.com"),
-                    ),
-                    ListTile(
-                      title: Text("Experiencia",
-                        style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold,),
-                      ),
-                      subtitle: Text("It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
-                      ),
-                    ),
-                    ListTile(
-                      title: Text("Página web",
-                        style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold,),
-                      ),
-                      subtitle: Text("https://tudominio.com",
+                      title: Text(
+                        widget.candidate.nombre,
                         style: TextStyle(
                           color: COLOR_BRAND_PRIMARY,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      trailing: SvgPicture.asset("assets/images/link.svg", color: COLOR_BRAND_PRIMARY,),
+                      trailing: SvgPicture.asset(
+                        "assets/images/link.svg",
+                        color: COLOR_BRAND_PRIMARY,
+                      ),
                     ),
                     ListTile(
-                      title: Text("Redes Sociales",
-                        style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold,),
+                      title: Text(
+                        "Postula por la región:",
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(widget.candidate.region),
+                    ),
+                    ListTile(
+                      title: Text(
+                        "Número:",
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(widget.candidate.numero.toString()),
+                    ),
+                   widget.candidate.profesion != "" ? ListTile(
+                      title: Text(
+                        "Profesión:",
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(widget.candidate.profesion!),
+                    ) : Container(),
+                    widget.candidate.email != "" ? ListTile(
+                      title: Text(
+                        "Email",
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(widget.candidate.email!),
+                    ) : Container(),
+                    widget.candidate.experiencia != "" ? ListTile(
+                      title: Text(
+                        "Experiencia",
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(
+                          widget.candidate.experiencia!,
+                      ),
+                    ) : Container(),
+                    widget.candidate.paginaWeb != "" ? ListTile(
+                      title: Text(
+                        "Página web",
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(
+                        widget.candidate.paginaWeb!,
+                        style: TextStyle(
+                          color: COLOR_BRAND_PRIMARY,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      trailing: SvgPicture.asset(
+                        "assets/images/link.svg",
+                        color: COLOR_BRAND_PRIMARY,
+                      ),
+                    ) : Container(),
+                    ListTile(
+                      title: Text(
+                        "Redes Sociales",
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       subtitle: Row(
                         children: [
-                          IconButton(
-                            onPressed: (){},
-                            icon: SvgPicture.asset("assets/images/facebook.svg", color: COLOR_BRAND_PRIMARY,),
-                          ),
-                          IconButton(
-                            onPressed: (){},
-                            icon: SvgPicture.asset("assets/images/twitter.svg", color: COLOR_BRAND_PRIMARY,),
-                          ),
-                          IconButton(
-                            onPressed: (){},
-                            icon: SvgPicture.asset("assets/images/instagram.svg", color: COLOR_BRAND_PRIMARY,),
-                          ),
+                          widget.candidate.facebook != "" ? IconButton(
+                            onPressed: () {},
+                            icon: SvgPicture.asset(
+                              "assets/images/facebook.svg",
+                              color: COLOR_BRAND_PRIMARY,
+                            ),
+                          ) : Container(),
+                          widget.candidate.twitter != "" ? IconButton(
+                            onPressed: () {},
+                            icon: SvgPicture.asset(
+                              "assets/images/twitter.svg",
+                              color: COLOR_BRAND_PRIMARY,
+                            ),
+                          ) : Container(),
+                          widget.candidate.instagram != "" ? IconButton(
+                            onPressed: () {},
+                            icon: SvgPicture.asset(
+                              "assets/images/instagram.svg",
+                              color: COLOR_BRAND_PRIMARY,
+                            ),
+                          ) : Container(),
                         ],
                       ),
                     ),
-                    SizedBox(height: _height * 0.015,),
+                    SizedBox(
+                      height: _height * 0.015,
+                    ),
                   ],
                 ),
               ),

@@ -130,9 +130,13 @@ class _CandidateListPageState extends State<CandidateListPage> {
             //profesion: listCandidate[index].profesion,
             onPressed: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CandidateDetailPage()));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CandidateDetailPage(
+                    candidate: listCandidate[index],
+                  ),
+                ),
+              );
             },
           );
         },
