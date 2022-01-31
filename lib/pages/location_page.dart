@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_codigo4_partidop/utils/map_style.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class LocationPage extends StatefulWidget {
@@ -21,10 +24,14 @@ class _LocationPageState extends State<LocationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Example"),
+        title: Text("Bases Moradas"),
       ),
       body: GoogleMap(
         initialCameraPosition: cameraPosition,
+        mapType: MapType.normal,
+        onMapCreated: (GoogleMapController _controller){
+          _controller.setMapStyle(json.encode(mapStyle));
+        },
       ),
     );
   }
