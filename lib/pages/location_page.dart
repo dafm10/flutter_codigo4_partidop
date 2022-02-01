@@ -100,31 +100,68 @@ class _LocationPageState extends State<LocationPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14.0),
           ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                height: _height * 0.2,
-                width: _width * 0.7,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(14.0),
-                    topRight: Radius.circular(14.0),
-                  ),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(location.imagen),
+          content: Container(
+            constraints: BoxConstraints(
+              maxWidth: _width * 0.7,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  height: _height * 0.2,
+                  width: _width * 0.7,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(14.0),
+                      topRight: Radius.circular(14.0),
+                    ),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(location.imagen),
+                    ),
                   ),
                 ),
-              ),
-              Text(
-                location.base,
-                style: TextStyle(
-                  color: COLOR_BRAND_PRIMARY,
-                  fontWeight: FontWeight.bold,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 4.0),
+                  child: Text(
+                    location.base,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: COLOR_BRAND_PRIMARY,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 4.0),
+                  child: Text(
+                    "${location.distrito} - ${location.region}",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Colors.black87.withOpacity(0.8),
+                      fontWeight: FontWeight.normal,
+                      fontSize: 14.0,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 4.0),
+                  child: Text(
+                    location.direccion,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Colors.black87.withOpacity(0.8),
+                      fontWeight: FontWeight.normal,
+                      fontSize: 13.0,
+                    ),
+                  ),
+                ),
+                SizedBox(height: _height * 0.015),
+              ],
+            ),
           ),
         );
       },
@@ -173,12 +210,8 @@ class _LocationPageState extends State<LocationPage> {
               scrollDirection: Axis.horizontal,
               physics: BouncingScrollPhysics(),
               child: Row(
-                children: [
-                  ItemListLocationWidget(),
-                  ItemListLocationWidget(),
-                  ItemListLocationWidget(),
-                  ItemListLocationWidget(),
-                ],
+                children:
+                  listBases.map<Widget>((e) => ItemListLocationWidget(basesModel: e,)).toList(),
               ),
             ),
           ),

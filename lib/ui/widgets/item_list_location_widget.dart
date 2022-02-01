@@ -1,13 +1,17 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_codigo4_partidop/models/bases_model.dart';
 import 'package:flutter_codigo4_partidop/ui/general/colors.dart';
 
 class ItemListLocationWidget extends StatelessWidget {
-  const ItemListLocationWidget({Key? key}) : super(key: key);
+
+  BasesModel basesModel;
+
+  ItemListLocationWidget({
+    required this.basesModel,
+  });
 
   @override
   Widget build(BuildContext context) {
-
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
 
@@ -40,7 +44,7 @@ class ItemListLocationWidget extends StatelessWidget {
               image: DecorationImage(
                 fit: BoxFit.cover,
                 image: NetworkImage(
-                    "https://visitalima.pe/wp-content/uploads/2020/09/1-2.jpg"),
+                    basesModel.imagen),
               ),
             ),
           ),
@@ -52,14 +56,14 @@ class ItemListLocationWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Base Rimac",
+                    basesModel.base,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: COLOR_BRAND_PRIMARY,
                         fontSize: 16.0),
                   ),
                   Text(
-                    "Lima - Rimac",
+                    "${basesModel.region} - ${basesModel.distrito}",
                     style: TextStyle(
                       fontWeight: FontWeight.normal,
                       color: Colors.black87.withOpacity(0.6),
@@ -67,7 +71,7 @@ class ItemListLocationWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "Av. Santa Rosa 183, Piedra Liza, Rimac",
+                    basesModel.direccion,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
