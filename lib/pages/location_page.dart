@@ -12,6 +12,26 @@ class LocationPage extends StatefulWidget {
 }
 
 class _LocationPageState extends State<LocationPage> {
+
+  Map<MarkerId, Marker> _markers = {};
+  List myLocation = [
+    {
+      "latitude": -8.0527962,
+      "longitude": -79.0546765,
+      "text": "Marcador 1",
+    },
+    {
+      "latitude": -12.094795,
+      "longitude": -77.023262,
+      "text": "Marcador 2",
+    },
+    {
+      "latitude": -12.131056,
+      "longitude": -77.030398,
+      "text": "Marcador 3",
+    }
+  ];
+
   CameraPosition cameraPosition = CameraPosition(
     zoom: 15,
     target: LatLng(
@@ -32,6 +52,23 @@ class _LocationPageState extends State<LocationPage> {
         onMapCreated: (GoogleMapController _controller){
           _controller.setMapStyle(json.encode(mapStyle));
         },
+        onTap: (LatLng position){
+          print(position);
+          MarkerId _markerId = MarkerId(_markers.length.toString());
+          Marker _marker = Marker(
+            markerId: _markerId,
+            position: position,
+            icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
+            draggable: true,
+            onDragEnd: (LatLng newPosition){
+            }
+          );
+          _markers[_markerId] = _marker;
+          setState(() {
+
+          });
+        },
+        markers: _markers.values.toSet(),
       ),
     );
   }
