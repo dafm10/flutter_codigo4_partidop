@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_codigo4_partidop/models/bases_model.dart';
+import 'package:flutter_codigo4_partidop/services/api_services.dart';
 import 'package:flutter_codigo4_partidop/ui/general/colors.dart';
 import 'package:flutter_codigo4_partidop/ui/widgets/item_list_location_widget.dart';
 import 'package:flutter_codigo4_partidop/utils/map_style.dart';
@@ -16,6 +18,9 @@ class LocationPage extends StatefulWidget {
 
 class _LocationPageState extends State<LocationPage> {
   Map<MarkerId, Marker> _markers = {};
+  APIService _apiService = APIService();
+  List<BasesModel> listBases = [];
+
   List myLocation = [
     {
       "latitude": -8.0527962,
@@ -35,7 +40,7 @@ class _LocationPageState extends State<LocationPage> {
   ];
 
   CameraPosition cameraPosition = CameraPosition(
-    zoom: 10,
+    zoom: 5,
     target: LatLng(
       -12.094833,
       -77.023038,
@@ -46,8 +51,24 @@ class _LocationPageState extends State<LocationPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getMarkers();
+    //getMarkers();
+    _apiService.getListbases().then((value) {
+      listBases = value;
+      listBases.forEach((element) {
+        MarkerId _markerId = MarkerId(_markers.length.toString());
+        Marker _marker = Marker(
+            markerId: _markerId,
+            position: LatLng(element.latitud, element.longitud),
+            onTap: () {
+              showDialogMarker(element);
+            });
+        _markers[_markerId] = _marker;
+      });
+      setState(() {});
+    });
   }
+
+  void getMarkersBases() {}
 
   void getMarkers() {
     myLocation.forEach((element) {
@@ -63,16 +84,47 @@ class _LocationPageState extends State<LocationPage> {
     setState(() {});
   }
 
-  void showDialogMarker(String text) {
+  void showDialogMarker(BasesModel location) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        double _width = MediaQuery.of(context).size.width;
+        double _height = MediaQuery.of(context).size.height;
+
         return AlertDialog(
-          content: Text(
-            text,
-            style: TextStyle(
-              color: Colors.black87,
-            ),
+          contentPadding: const EdgeInsets.all(0.0),
+          titlePadding: const EdgeInsets.all(0.0),
+          insetPadding: const EdgeInsets.all(0.0),
+          actionsPadding: const EdgeInsets.all(0.0),
+          buttonPadding: const EdgeInsets.all(0.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14.0),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                height: _height * 0.2,
+                width: _width * 0.7,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(14.0),
+                    topRight: Radius.circular(14.0),
+                  ),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(location.imagen),
+                  ),
+                ),
+              ),
+              Text(
+                location.base,
+                style: TextStyle(
+                  color: COLOR_BRAND_PRIMARY,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
         );
       },
