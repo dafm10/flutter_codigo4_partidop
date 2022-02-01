@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_codigo4_partidop/ui/general/colors.dart';
+import 'package:flutter_codigo4_partidop/ui/widgets/item_list_location_widget.dart';
 import 'package:flutter_codigo4_partidop/utils/map_style.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -12,7 +15,6 @@ class LocationPage extends StatefulWidget {
 }
 
 class _LocationPageState extends State<LocationPage> {
-
   Map<MarkerId, Marker> _markers = {};
   List myLocation = [
     {
@@ -26,8 +28,8 @@ class _LocationPageState extends State<LocationPage> {
       "text": "Marcador 2",
     },
     {
-      "latitude": -12.131056,
-      "longitude": -77.030398,
+      "latitude": -11.999568,
+      "longitude": -77.056496,
       "text": "Marcador 3",
     }
   ];
@@ -47,33 +49,54 @@ class _LocationPageState extends State<LocationPage> {
     getMarkers();
   }
 
-  void getMarkers(){
+  void getMarkers() {
     myLocation.forEach((element) {
       MarkerId _markerId = MarkerId(_markers.length.toString());
       Marker _marker = Marker(
-        markerId: _markerId,
-        position: LatLng(element["latitude"], element["longitude"]),
-      );
+          markerId: _markerId,
+          position: LatLng(element["latitude"], element["longitude"]),
+          onTap: () {
+            showDialogMarker(element["text"]);
+          });
       _markers[_markerId] = _marker;
     });
-    setState(() {
+    setState(() {});
+  }
 
-    });
+  void showDialogMarker(String text) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text(
+            text,
+            style: TextStyle(
+              color: Colors.black87,
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    double _height = MediaQuery.of(context).size.height;
+    double _width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Bases Moradas"),
       ),
-      body: GoogleMap(
-        initialCameraPosition: cameraPosition,
-        mapType: MapType.normal,
-        onMapCreated: (GoogleMapController _controller){
-          _controller.setMapStyle(json.encode(mapStyle));
-        },
-        onTap: (LatLng position){
+      body: Stack(
+        children: [
+          GoogleMap(
+            initialCameraPosition: cameraPosition,
+            mapType: MapType.normal,
+            onMapCreated: (GoogleMapController _controller) {
+              _controller.setMapStyle(json.encode(mapStyle));
+            },
+            /*onTap: (LatLng position){
           //print(position);
           MarkerId _markerId = MarkerId(myLocation.length.toString());
           Marker _marker = Marker(
@@ -89,8 +112,25 @@ class _LocationPageState extends State<LocationPage> {
           setState(() {
 
           });
-        },
-        markers: _markers.values.toSet(),
+        },*/
+            markers: _markers.values.toSet(),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              physics: BouncingScrollPhysics(),
+              child: Row(
+                children: [
+                  ItemListLocationWidget(),
+                  ItemListLocationWidget(),
+                  ItemListLocationWidget(),
+                  ItemListLocationWidget(),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
