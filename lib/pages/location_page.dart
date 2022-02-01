@@ -33,12 +33,33 @@ class _LocationPageState extends State<LocationPage> {
   ];
 
   CameraPosition cameraPosition = CameraPosition(
-    zoom: 15,
+    zoom: 10,
     target: LatLng(
       -12.094833,
       -77.023038,
     ),
   );
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getMarkers();
+  }
+
+  void getMarkers(){
+    myLocation.forEach((element) {
+      MarkerId _markerId = MarkerId(_markers.length.toString());
+      Marker _marker = Marker(
+        markerId: _markerId,
+        position: LatLng(element["latitude"], element["longitude"]),
+      );
+      _markers[_markerId] = _marker;
+    });
+    setState(() {
+
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,13 +74,14 @@ class _LocationPageState extends State<LocationPage> {
           _controller.setMapStyle(json.encode(mapStyle));
         },
         onTap: (LatLng position){
-          print(position);
-          MarkerId _markerId = MarkerId(_markers.length.toString());
+          //print(position);
+          MarkerId _markerId = MarkerId(myLocation.length.toString());
           Marker _marker = Marker(
             markerId: _markerId,
             position: position,
             icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
             draggable: true,
+
             onDragEnd: (LatLng newPosition){
             }
           );
