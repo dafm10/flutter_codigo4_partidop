@@ -4,7 +4,7 @@
 const String pathProduction = "http://192.168.1.38:8000/API";
 
 const List<String> regionList = [
-  "Todos",
+  //"Todos",
   "Lima",
   "Arequipa",
   "Tacna",
