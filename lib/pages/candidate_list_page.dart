@@ -4,6 +4,7 @@ import 'package:flutter_codigo4_partidop/pages/candidate_detail_page.dart';
 import 'package:flutter_codigo4_partidop/services/api_services.dart';
 import 'package:flutter_codigo4_partidop/ui/general/colors.dart';
 import 'package:flutter_codigo4_partidop/ui/widgets/item_list_candidate_widget.dart';
+import 'package:flutter_codigo4_partidop/utils/constants.dart';
 
 class CandidateListPage extends StatefulWidget {
   const CandidateListPage({Key? key}) : super(key: key);
@@ -14,15 +15,6 @@ class CandidateListPage extends StatefulWidget {
 
 class _CandidateListPageState extends State<CandidateListPage> {
   final APIService _apiService = APIService();
-  List<String> regionList = [
-    "Lima",
-    "Arequipa",
-    "Tacna",
-    "Cusco",
-    "Huancavelica",
-    "La Libertad",
-    "Ayacucho",
-  ];
 
   String regionValue = "";
   List<CandidateModel> listCandidate = [];

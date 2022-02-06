@@ -6,6 +6,7 @@ import 'package:flutter_codigo4_partidop/models/bases_model.dart';
 import 'package:flutter_codigo4_partidop/services/api_services.dart';
 import 'package:flutter_codigo4_partidop/ui/general/colors.dart';
 import 'package:flutter_codigo4_partidop/ui/widgets/item_list_location_widget.dart';
+import 'package:flutter_codigo4_partidop/utils/constants.dart';
 import 'package:flutter_codigo4_partidop/utils/map_style.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -19,7 +20,9 @@ class LocationPage extends StatefulWidget {
 class _LocationPageState extends State<LocationPage> {
   Map<MarkerId, Marker> _markers = {};
   APIService _apiService = APIService();
+  String regionValue = "";
   List<BasesModel> listBases = [];
+  List<BasesModel> listBasesAux = [];
 
   List myLocation = [
     {
@@ -52,9 +55,22 @@ class _LocationPageState extends State<LocationPage> {
     // TODO: implement initState
     super.initState();
     //getMarkers();
+    regionValue = regionList[0];
     _apiService.getListbases().then((value) {
       listBases = value;
+      listBasesAux = value;
+      changeRegion(regionValue);
       listBases.forEach((element) {
+        MarkerId _markerId = MarkerId(_markers.length.toString());
+        Marker _marker = Marker(
+            markerId: _markerId,
+            position: LatLng(element.latitud, element.longitud),
+            onTap: () {
+              showDialogMarker(element);
+            });
+        _markers[_markerId] = _marker;
+      });
+      listBasesAux.forEach((element) {
         MarkerId _markerId = MarkerId(_markers.length.toString());
         Marker _marker = Marker(
             markerId: _markerId,
@@ -68,9 +84,26 @@ class _LocationPageState extends State<LocationPage> {
     });
   }
 
+  changeRegion(String region) {
+    listBases = listBasesAux;
+    listBases = listBases.where((element) => element.region == region).toList();
+    _markers.clear();
+    listBases.forEach((element) {
+      MarkerId _markerId = MarkerId(_markers.length.toString());
+      Marker _marker = Marker(
+          markerId: _markerId,
+          position: LatLng(element.latitud, element.longitud),
+          onTap: () {
+            showDialogMarker(element);
+          });
+      _markers[_markerId] = _marker;
+    });
+    setState(() {});
+  }
+
   void getMarkersBases() {}
 
-  void getMarkers() {
+  /*void getMarkers() {
     myLocation.forEach((element) {
       MarkerId _markerId = MarkerId(_markers.length.toString());
       Marker _marker = Marker(
@@ -82,7 +115,7 @@ class _LocationPageState extends State<LocationPage> {
       _markers[_markerId] = _marker;
     });
     setState(() {});
-  }
+  }*/
 
   void showDialogMarker(BasesModel location) {
     showDialog(
@@ -122,7 +155,8 @@ class _LocationPageState extends State<LocationPage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 4.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 6.0, vertical: 4.0),
                   child: Text(
                     location.base,
                     maxLines: 2,
@@ -134,7 +168,8 @@ class _LocationPageState extends State<LocationPage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 4.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 6.0, vertical: 4.0),
                   child: Text(
                     "${location.distrito} - ${location.region}",
                     maxLines: 2,
@@ -147,7 +182,8 @@ class _LocationPageState extends State<LocationPage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 4.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 6.0, vertical: 4.0),
                   child: Text(
                     location.direccion,
                     maxLines: 2,
@@ -175,7 +211,35 @@ class _LocationPageState extends State<LocationPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Bases Moradas"),
+        title: Theme(
+          data: Theme.of(context).copyWith(
+            canvasColor: COLOR_BRAND_PRIMARY,
+          ),
+          child: DropdownButton(
+            underline: Container(),
+            value: regionValue,
+            icon: Icon(
+              Icons.keyboard_arrow_down,
+              color: Colors.white,
+            ),
+            items: regionList
+                .map((e) => DropdownMenuItem(
+                      child: Text(
+                        e,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      value: e,
+                    ))
+                .toList(),
+            onChanged: (String? value) {
+              regionValue = value!;
+              changeRegion(regionValue);
+            },
+          ),
+        ),
       ),
       body: Stack(
         children: [
